@@ -28,4 +28,5 @@ for i in image_path:
       display(pil_image)
 ```
 
+![image](https://github.com/YeoungJun0508/similar-project/assets/145903037/9ae2f68d-11df-4881-a21c-5c960d23ed81)
 
