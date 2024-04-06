@@ -1,1 +1,72 @@
 
+https://github.com/YoongiKim/AutoCrawler
+
+autocrawler가 오류로 실행이 안됨.
+(크롬 버전 문제인지 확인해 보았지만 아니였음.)
+
+이렇게 된거 그냥 직접 만들어보자!
+
+```
+import os
+import requests
+from bs4 import BeautifulSoup
+from urllib.parse import urlparse, parse_qs
+
+def create_directory(keyword):
+    if not os.path.exists(keyword):
+        os.makedirs(keyword)
+
+def download_images_from_google(keyword, num_images):
+    create_directory(keyword)
+    
+    url = f"https://www.google.com/search?q={keyword}&tbm=isch"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, "html.parser")
+    
+    image_links = []
+    for img in soup.find_all("img"):
+        link = img.get("src")
+        if link and link.startswith("https"):
+            image_links.append(link)
+    
+    for i, link in enumerate(image_links[:num_images], 1):
+        try:
+            response = requests.get(link)
+            with open(f"{keyword}/image_{i}.jpg", "wb") as f:
+                f.write(response.content)
+            print(f"Downloaded image {i}")
+        except Exception as e:
+            print(f"Failed to download image {i}: {e}")
+
+def download_images_from_naver(keyword, num_images):
+    create_directory(keyword)
+    
+    url = f"https://search.naver.com/search.naver?where=image&query={keyword}"
+    headers = {"User-Agent": "Mozilla/5.0"}
+    response = requests.get(url, headers=headers)
+    soup = BeautifulSoup(response.text, "html.parser")
+    
+    image_links = []
+    for img in soup.find_all("img", class_="_img"):
+        link = img.get("data-source")
+        if link:
+            image_links.append(link)
+    
+    for i, link in enumerate(image_links[:num_images], 1):
+        try:
+            response = requests.get(link)
+            with open(f"{keyword}/image_{i}.jpg", "wb") as f:
+                f.write(response.content)
+            print(f"Downloaded image {i}")
+        except Exception as e:
+            print(f"Failed to download image {i}: {e}")
+
+if __name__ == "__main__":
+    keyword = input("검색할 키워드를 입력하세요: ")
+    num_images = 100
+    
+    download_images_from_google(keyword, num_images)
+    download_images_from_naver(keyword, num_images)
+```
+키워드 적으면 키워드대로 폴더를 만든 후 20개의 이미지 저장하는 코드.
