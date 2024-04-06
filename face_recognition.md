@@ -3,6 +3,8 @@
 출처:https://github.com/ageitgey/face_recognition
 
 ```
+pip install face_recognition
+
 import os
 import face_recognition
 
