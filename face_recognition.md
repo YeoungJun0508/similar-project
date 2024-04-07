@@ -32,3 +32,15 @@ for i in image_path:
 
 ![image](https://github.com/YeoungJun0508/similar-project/assets/145903037/9ae2f68d-11df-4881-a21c-5c960d23ed81)
 
+
+
+기존에 사용하던 mtcnn과 차이점
+
+![Sullyoon19](https://github.com/YeoungJun0508/similar-project/assets/145903037/160a0167-682c-4d7d-8318-2b88da7fb5d8)
+
+옆 모습의 사진을 mtcnn은 crop하지만 face_recognition은 잡지 못함.
+
+![Sullyoon19](https://github.com/YeoungJun0508/similar-project/assets/145903037/1ba1d5a1-2461-4459-951b-95c5316c84eb)
+
+
+하지만 경량화는 더 잘되어있음.
